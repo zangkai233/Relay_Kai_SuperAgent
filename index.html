@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#d9cfb9">
+  <title>Relay · Agent Workflow Demo</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="page">
+    <header class="site-header">
+      <a class="brand" href="/">RELAY<span> / AGENT</span></a>
+      <span class="demo-label">Fixed scenarios · No live APIs</span>
+    </header>
+
+    <main>
+      <section class="intro">
+        <div class="intro-mark">AGENT WORKFLOW / 02 SCENARIOS</div>
+        <h1>One task.<br>A team of agents working in relay.</h1>
+        <p>Watch the agents coordinate on the left and see what the user actually receives on the phone on the right. Calendar entries, travel estimates, device status, and user taps are all scripted for this demo.</p>
+      </section>
+
+      <section class="scenario-section" aria-labelledby="scenario-heading">
+        <div class="section-row"><h2 id="scenario-heading">Choose a scenario</h2><span>Click to replay from the start</span></div>
+        <div class="scenario-grid">
+          <button class="scenario" data-workflow="visa" type="button">
+            <span class="scenario-number">01 / APPOINTMENT</span>
+            <strong>Visa document appointment</strong>
+            <span>October 1, 14:30 · Departure reminder, document checklist, arrival, and on-site check</span>
+            <b>Start demo <span aria-hidden="true">↗</span></b>
+          </button>
+          <button class="scenario" data-workflow="evening" type="button">
+            <span class="scenario-number">02 / EVENING</span>
+            <strong>Steak dinner and ML review</strong>
+            <span>Groceries, substitutions, cooking, Chapter 10 review, and tomorrow's class</span>
+            <b>Start demo <span aria-hidden="true">↗</span></b>
+          </button>
+        </div>
+      </section>
+
+      <section class="demo" aria-labelledby="demo-heading">
+        <div class="demo-heading">
+          <div>
+            <span class="eyebrow">LIVE DEMONSTRATION</span>
+            <h2 id="demo-heading">Choose a scenario to begin</h2>
+            <p id="demo-subtitle">The agent workflow and phone screen will update together.</p>
+          </div>
+          <div class="run-state"><span id="run-status" class="status">Ready</span><span id="progress-label">0 / 0</span></div>
+        </div>
+        <div class="progress"><div id="progress-fill"></div></div>
+
+        <div class="demo-grid">
+          <section class="workflow-panel" aria-label="Agent workflow">
+            <div class="panel-heading"><div><span>LEFT / WORKFLOW</span><h3>Agent relay</h3></div><span id="active-label">0 agents working</span></div>
+
+            <div class="role-strip" aria-label="Four agent layers">
+              <div class="role-card" data-role="super"><strong>Super Agent</strong><span>Understand · Delegate</span></div>
+              <div class="role-card" data-role="boss"><strong>Boss Agent</strong><span>Coordinate · Relay</span></div>
+              <div class="role-card" data-role="worker"><strong>Worker Agent</strong><span>Complete specific steps</span></div>
+              <div class="role-card" data-role="supervisor"><strong>Supervisor</strong><span>Read taps · Verify</span></div>
+            </div>
+
+            <div class="focus"><span>HAPPENING NOW</span><strong id="focus-title">Choose a scenario</strong><p id="focus-detail">Completed agent cards fade away. Decisions and user confirmations remain visible.</p></div>
+
+            <div class="graph-scroll">
+              <div id="graph" class="graph" aria-label="Live agent node graph">
+                <svg id="edges" class="edges" aria-hidden="true"></svg>
+                <div class="lane" data-lane="super"><div class="lane-title">SUPER</div><div class="node-list"></div></div>
+                <div class="lane" data-lane="boss"><div class="lane-title">BOSS</div><div class="node-list"></div></div>
+                <div class="lane" data-lane="worker"><div class="lane-title">WORKER</div><div class="node-list"></div></div>
+                <div class="lane" data-lane="supervisor"><div class="lane-title">SUPERVISOR</div><div class="node-list"></div></div>
+                <div id="graph-empty" class="graph-empty">Agent cards will appear here in relay order.</div>
+              </div>
+            </div>
+
+            <div id="audit" class="audit idle" aria-live="polite"><b>Supervisor has not checked yet</b><span>It will read simulated taps and checklist states from the phone.</span></div>
+            <div class="log-head"><strong>Activity</strong><span id="event-count">00</span></div>
+            <ol id="event-log" class="event-log" aria-live="polite"><li>Waiting for the first event.</li></ol>
+          </section>
+
+          <aside class="phone-panel" aria-label="Simulated iPhone user view">
+            <div class="panel-heading phone-panel-heading"><div><span>RIGHT / USER VIEW</span><h3>On the user's phone</h3></div><span>Simulated iPhone</span></div>
+            <div class="phone">
+              <div class="phone-screen">
+                <div class="phone-status"><span id="phone-clock">12:40</span><span class="phone-island"></span><span>●●●  ▰</span></div>
+                <div class="phone-app"><span class="phone-app-icon">R</span><strong>Relay</strong><span>Demo mode</span></div>
+                <div class="phone-body">
+                  <div class="phone-scene"><span>CURRENT SCENE</span><strong id="phone-scene">Waiting to begin</strong></div>
+                  <div id="phone-content" class="phone-content" aria-live="polite">
+                    <div class="phone-empty"><span>R</span><strong>Ready when you are.</strong><p>Choose a scenario to see the prompts and checklists the user would receive.</p></div>
+                  </div>
+                  <div id="phone-notice" class="phone-notice" hidden></div>
+                </div>
+                <div class="phone-bottom"><span>Simulated user actions play automatically</span><i></i></div>
+              </div>
+            </div>
+            <p class="phone-explainer">This is the user-facing view. Supervisor evaluates the simulated confirmations and checklist ticks shown here.</p>
+          </aside>
+        </div>
+
+        <div class="insight-section">
+          <div class="insight-heading"><div><span>DECISIONS</span><h3>Decisions formed along the way</h3></div><span id="insight-count">0 items</span></div>
+          <div id="insight-list" class="insight-list"><p class="insight-empty">Schedule, timing, supplies, and backup plans will appear here.</p></div>
+        </div>
+        <div class="demo-foot">Scripted demo · Dates, traffic, calendar events, shopping, and taps are sample data. Verify real conditions before acting.</div>
+      </section>
+    </main>
+
+    <footer>RELAY / AGENT <span>One workflow connecting delegation, user confirmation, and supervision.</span></footer>
+  </div>
+</body>
+</html>
